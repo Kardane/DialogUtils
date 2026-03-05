@@ -33,7 +33,7 @@ dependencies {
     modImplementation ("eu.pb4:polymer-autohost:${project.polymer_version}")
 
     modImplementation include("eu.pb4:map-canvas-api:${project.mapcanvas_version}")
-    modImplementation include("eu.pb4:placeholder-api:2.6.2+1.21.5")
+    modImplementation include("eu.pb4:placeholder-api:${project.papi_version}")
 }
 
 processResources {

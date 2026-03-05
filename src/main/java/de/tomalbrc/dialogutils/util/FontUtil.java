@@ -14,7 +14,7 @@ import eu.pb4.polymer.resourcepack.api.ResourcePackBuilder;
 import eu.pb4.polymer.resourcepack.impl.generation.DefaultRPBuilder;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.network.chat.FontDescription;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
@@ -27,8 +27,8 @@ import java.util.Objects;
 import java.util.function.Function;
 
 public class FontUtil {
-    public final static FontDescription.Resource FONT = new FontDescription.Resource(ResourceLocation.fromNamespaceAndPath(DialogUtils.MODID, "default"));
-    public static final FontDescription.Resource ALIGN_FONT = new FontDescription.Resource(ResourceLocation.fromNamespaceAndPath(DialogUtils.MODID, "align"));
+    public final static ResourceLocation FONT = ResourceLocation.fromNamespaceAndPath(DialogUtils.MODID, "default");
+    public static final ResourceLocation ALIGN_FONT = ResourceLocation.fromNamespaceAndPath(DialogUtils.MODID, "align");
     public static Map<ResourceLocation, BitmapFont> FONTS = new Object2ObjectOpenHashMap<>();
 
     public static BitmapFont loadFont(ResourcePackBuilder resourcePackBuilder, ResourceLocation id) {
@@ -44,16 +44,16 @@ public class FontUtil {
 
     @Nullable
     public static BitmapFont fontReader(ResourcePackBuilder builder) {
-        if (!FONTS.containsKey(FontDescription.DEFAULT.id())) {
+        if (!FONTS.containsKey(Style.DEFAULT_FONT)) {
             try {
                 if (builder == null) builder = PolymerResourcePackUtils.createBuilder(FabricLoader.getInstance().getGameDir().resolve("polymer/dialog"));
-                var fr = loadFont(builder, FontDescription.DEFAULT.id());
-                FONTS.put(FontDescription.DEFAULT.id(), fr);
-                FONTS.put(FontUtil.FONT.id(), fr);
+                var fr = loadFont(builder, Style.DEFAULT_FONT);
+                FONTS.put(Style.DEFAULT_FONT, fr);
+                FONTS.put(FontUtil.FONT, fr);
             } catch (Exception ignored) {}
         }
 
-        return FONTS.get(FontDescription.DEFAULT.id());
+        return FONTS.get(Style.DEFAULT_FONT);
     }
 
     @Nullable
@@ -66,9 +66,9 @@ public class FontUtil {
     }
 
     public static void registerDefaultFonts(ResourcePackBuilder resourcePackBuilder) {
-        var def = loadFont(resourcePackBuilder, FontDescription.DEFAULT.id());
-        FONTS.put(FontUtil.FONT.id(), def);
-        loadFont(resourcePackBuilder, FontUtil.ALIGN_FONT.id());
+        var def = loadFont(resourcePackBuilder, Style.DEFAULT_FONT);
+        FONTS.put(FontUtil.FONT, def);
+        loadFont(resourcePackBuilder, FontUtil.ALIGN_FONT);
     }
 
     public static void copyVanillaFont(ResourcePackBuilder resourcePackBuilder, String namespace) {
