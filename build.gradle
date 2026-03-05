@@ -6,6 +6,7 @@ plugins {
 version = project.mod_version + "+" + project.minecraft_version
 group = project.maven_group
 def githubRepository = System.getenv("GITHUB_REPOSITORY") ?: "Kardane/DialogUtils"
+def mavenPublishVersion = project.mod_version + "-mc" + project.minecraft_version
 
 loom {
     accessWidenerPath = file("src/main/resources/dialogutils.accesswidener")
@@ -84,6 +85,7 @@ publishing {
     publications {
         create("mavenJava", MavenPublication) {
             artifactId = project.archives_base_name
+            version = mavenPublishVersion
             from components.java
         }
     }
